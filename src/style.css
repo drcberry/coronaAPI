@@ -1,0 +1,91 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700);
+body {
+  font-family: Lato;
+  font-size:18px;
+  background: #e8e9eb;
+  text-align:center;
+  color: #313638;
+}
+
+
+#covid {
+  line-height:1.5;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  margin-top:100px;
+  
+}
+.box {
+  display:flex;
+  /*grid-template-columns: repeat(3,1fr);
+  grid-gap: 2rem;*/
+  justify-content: space-between;
+  text-align:center;
+  width: 800px;
+  
+}
+.statBox {
+  background-color: #e0dfd5;
+  padding: 20px 50px;
+  border-radius:12px;
+  box-shadow: 2px 2px 4px #f06543
+}
+span {
+  color: #f06543
+}
+.countrySelect {
+  margin: 2rem 0;
+  text-align: center;
+}
+select {
+  padding: 0.5rem;
+  font-size:0.8rem;
+  
+  background-color: #e0dfd5
+}
+.footer {
+  color: #f43;
+  margin-top: 4rem;
+  line-height: 
+}
+a {
+  text-decoration:none;
+  color: #22a;
+}
+a:hover {
+  color: red;
+  text-shadow: 1px 1px;
+}
+@media only screen 
+  and (max-width: 800px)
+  and (orientation: portrait){
+  html {
+    font-size:14px;
+    line-height:1.5;
+    letter-spacing:2px;
+  }
+  
+  h1 {
+    font-size:2em;
+    line-height:2rem;
+  }
+ 
+  .box {
+    width: 90vw;
+    flex-direction: column;
+    margin: 0px auto;
+  
+  }
+  .statBox {
+    font-size: 2.4rem;
+    margin: 20px 0;
+  }
+  .countrySelect {
+      font-size: 2.4rem;
+  }
+  select {
+  padding: 0.5rem;
+  font-size: 2.2rem;
+  }  
+}

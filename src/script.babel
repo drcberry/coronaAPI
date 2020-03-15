@@ -1,0 +1,99 @@
+const app = document.querySelector('#covid');
+const urlAPI = 'https://covid19.mathdro.id/api/';
+
+
+function useStats(url) {
+  const [stats,setStats] = React.useState();
+  const [loading, setLoading] = React.useState(true);
+  const [error,setError] = React.useState(false);
+  React.useEffect(()=> {
+    async function fetchData() {
+      setLoading(true);
+      setError();
+      console.log('fetching API');
+      const data = await fetch(url).then(res => res.json())
+      .catch(err => {setError(err);
+      });
+      setStats(data);
+      setLoading(false);
+    }
+    fetchData();
+  },[url]);
+  return {
+    stats,
+    loading,
+    error,
+  }
+    
+  
+}
+function Stats(input) {
+  //console.log(input);
+  //Need to figure this out, More direct input of variable url from <Stats> than Object, accidentally figured this out
+  const {stats, loading, error} = useStats(input.url);
+  console.log('log',stats,loading,error);
+  if(loading) return <p>Looking for Stats...</p>;
+  if(stats.error) return <p>Aw Man!No Stats!</p>;
+    return (
+      <div className='box'>
+        <div className='statBox'>
+          <h3>Confirmed:</h3>
+          <span>{stats.confirmed.value}</span>
+        </div>
+        <div className='statBox'>
+          <h3>Deaths:</h3>
+          <span>{stats.deaths.value}</span>
+        </div>
+        <div className='statBox'>
+          <h3>Recovered:</h3>
+          <span>{stats.recovered.value}</span>
+        </div>
+     </div>
+  )
+}
+
+function CountrySelect() {
+  
+    const {stats: countries,loading, error} = useStats("https://covid19.mathdro.id/api/countries");
+    const [selectedCountry, setSelectedCountry] = React.useState('US');
+    
+    if(loading) return <p>Looking for data...</p>;
+    if(error) return <p>Aw Man! No Data!</p>
+      return (
+      <div> 
+      <div className='countrySelect'>
+         <h3>COVID-19 Cases for Country:<br></br> {selectedCountry}</h3>
+          
+        
+          <select onChange={e => {setSelectedCountry(e.target.value);}}>
+        {Object.entries(countries.countries).map(([country,code]) => ( console.log({selectedCountry}),<option selected={selectedCountry === countries.countries[code]} key={code} value={countries.countries[code]}>{country}</option>))} 
+           </select>
+          </div>   
+       <Stats url= {`https://covid19.mathdro.id/api/countries/${selectedCountry}`} />
+          
+        </div>
+    )
+  }
+function Footer() {
+  return (
+    <div className='footer'>
+  <h3 >Serving data from John Hopkins University CSSE as a JSON API</h3>
+      <p>Thanks to <a href="https://github.com/mathdroid/covid-19-api" >mathdroid</a> for creating the API!</p>
+      </div>)
+}
+function ContainerAPI() {
+  
+    return(
+      <div>
+        <h1 > COVID-19 Cases Worldwide</h1>
+        <Stats url= "https://covid19.mathdro.id/api/"></Stats>
+        <CountrySelect ></ CountrySelect  >
+        <Footer />
+      </div>
+    )       
+ 
+}
+
+
+ReactDOM.render(<ContainerAPI />,app);
+
